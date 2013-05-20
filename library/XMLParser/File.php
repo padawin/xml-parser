@@ -7,13 +7,13 @@ class XMLParser_File
 	 * If no file is found, null is returned, else a XMLParser_File instance
 	 * is created
 	 *
-	 * @param $name string path to the file
+	 * @param $fileName string path to the file
 	 *
 	 * @return XMLParser_File|null
 	 */
-	public static function getFile($name)
+	public static function getFile($fileName)
 	{
-		if (!file_exists($name)) {
+		if (!file_exists($fileName)) {
 			return null;
 		}
 
