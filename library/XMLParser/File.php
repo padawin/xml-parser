@@ -14,6 +14,9 @@ abstract class XMLParser_File
 	 */
 	protected $_result;
 
+
+	protected $_parser;
+
 	/**
 	 * Method to create a object representing a xml file from the file name.
 	 * If no file is found, null is returned, else a XMLParser_File instance
@@ -38,7 +41,26 @@ abstract class XMLParser_File
 	protected function __construct($fileName)
 	{
 		$this->_file = $fileName;
+		$this->_parser = xml_parser_create("UTF-8");
+		xml_set_object($this->_parser, $this);
+		xml_set_element_handler($this->_parser, "startTag", "endTag");
+		xml_set_character_data_handler($this->_parser, "tagContent");
 	}
+
+	/**
+	 * Method called at the begining of the tag parsing
+	 */
+	public abstract function startTag($parser, $name, $attribs);
+
+	/**
+	 * Method called to process the tag content
+	 */
+	public abstract function tagContent($parser, $content);
+
+	/**
+	 * Method called at the end of the tag parsing
+	 */
+	public abstract function endTag($parser, $name, $attribs);
 
 	/**
 	 * Method which will parse the xml file and set the result in a class
@@ -46,20 +68,18 @@ abstract class XMLParser_File
 	 */
 	public function parse()
 	{
-		libxml_use_internal_errors(true);
-		$XMLFile = (array) simplexml_load_file($this->_file);
-		$errors = libxml_get_errors();
-		libxml_clear_errors();
-		if (!empty($errors)) {
-			throw new XMLParser_Exception(
-				"Invalid XML file provided ({$this->_file})"
-			);
+		$fh = fopen($this->_file, "r");
+		if (!$fh) {
+			throw new XMLParser_Exception("Cannot open file {$this->_file}");
 		}
 
-		foreach ($XMLFile['sale'] as $key => $row) {
-			$XMLFile['sale'][$key] = (array) $row;
+		while (!feof($fh)) {
+			$data = fread($fh, 4096);
+			xml_parse($this->_parser, $data, feof($fh));
 		}
-		$this->_result = $XMLFile;
+
+		fclose($fh);
+		xml_parser_free($this->_parser);
 	}
 
 	/**
