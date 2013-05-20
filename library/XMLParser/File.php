@@ -1,11 +1,18 @@
 <?php
 
+include_once('XMLParser/Exception.php');
+
 class XMLParser_File
 {
 	/**
 	 * XML file
 	 */
 	protected $_file;
+
+	/**
+	 * Content of the XML file
+	 */
+	protected $_result;
 
 	/**
 	 * Method to create a object representing a xml file from the file name.
@@ -31,5 +38,37 @@ class XMLParser_File
 	protected function __construct($fileName)
 	{
 		$this->_file = $fileName;
+	}
+
+	/**
+	 * Method which will parse the xml file and set the result in a class
+	 * attribute.
+	 */
+	public function parse()
+	{
+		libxml_use_internal_errors(true);
+		$XMLFile = (array) simplexml_load_file($this->_file);
+		$errors = libxml_get_errors();
+		libxml_clear_errors();
+		if (!empty($errors)) {
+			throw new XMLParser_Exception(
+				"Invalid XML file provided ({$this->_file})"
+			);
+		}
+
+		foreach ($XMLFile['sale'] as $key => $row) {
+			$XMLFile['sale'][$key] = (array) $row;
+		}
+		$this->_result = $XMLFile;
+	}
+
+	/**
+	 * Returns the content of the XML file.
+	 *
+	 * @return array
+	 */
+	public function getResult()
+	{
+		return $this->_result;
 	}
 }
