@@ -2,7 +2,7 @@
 
 include_once('XMLParser/Exception.php');
 
-class XMLParser_File
+abstract class XMLParser_File
 {
 	/**
 	 * XML file
