@@ -1,7 +1,13 @@
 <?php
 if (!empty($this->data) && is_array($this->data)) {
 	foreach ($this->data as $row) {
-		$row['orderRef'] = '"' . $row['orderRef'] . '"';
-		echo implode('|', $row);
+		printf(
+			"%s|%s|%s|%s|\"%s\"\n",
+			$row['affiliate'],
+			$row['amount'],
+			$row['commission'],
+			strtotime($row['datetime']),
+			$row['orderref']
+		);
 	}
 }
