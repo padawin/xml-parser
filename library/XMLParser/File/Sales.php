@@ -33,14 +33,16 @@ class XMLParser_File_Sales extends XmlParser_File
 
 	public function endTag($parser, $name, $attribs = array())
 	{
+		$return = null;
 		if ($name == 'SALE') {
 			$this->_currentSale['commission'] = number_format(
 				50 + $this->_currentSale['amount'] * .05,
 				2
 			);
-			$this->_result[] = $this->_currentSale;
+			$return = $this->_currentSale;
 		}
 
 		$this->_currentTag = null;
+		return $return;
 	}
 }
