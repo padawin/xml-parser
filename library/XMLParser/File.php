@@ -149,9 +149,9 @@ abstract class XMLParser_File
 	public function parse($options = 0)
 	{
 		//Set the options
-		$this->_doRender = $options & self::OPTION_RENDER == self::OPTION_RENDER;
-		$this->_doProcess = $options & self::OPTION_PROCESS == self::OPTION_PROCESS;
-		$this->_ephemeralMode = $options & self::OPTION_EPHEMERAL == self::OPTION_EPHEMERAL;
+		$this->_doRender = ($options & self::OPTION_RENDER) == self::OPTION_RENDER;
+		$this->_doProcess = ($options & self::OPTION_PROCESS) == self::OPTION_PROCESS;
+		$this->_ephemeralMode = ($options & self::OPTION_EPHEMERAL) == self::OPTION_EPHEMERAL;
 
 		//Open the XML file
 		$fh = @fopen($this->_file, "r");
