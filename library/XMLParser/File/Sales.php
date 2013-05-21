@@ -40,10 +40,10 @@ class XMLParser_File_Sales extends XmlParser_File
 	{
 		$return = null;
 		if ($name == 'SALE') {
-			$this->_currentSale['commission'] = number_format(
-				50 + $this->_currentSale['amount'] * .05,
-				2
 			);
+
+			$this->_currentSale['commission'] = 50 + $this->_currentSale['amount'] * .05;
+
 			$return = $this->_currentSale;
 		}
 
