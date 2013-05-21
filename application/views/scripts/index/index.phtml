@@ -1,5 +1,8 @@
 <?php
-if (!empty($this->data) && is_array($this->data)) {
+if (!empty($this->error)) {
+	echo $this->error;
+}
+else if (!empty($this->data) && is_array($this->data)) {
 	foreach ($this->data as $row) {
 		//use of the default render, but any other display process could have
 		//been implemented, for example, because it is a HTML view, the rows
