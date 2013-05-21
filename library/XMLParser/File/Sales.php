@@ -7,6 +7,10 @@ class XMLParser_File_Sales extends XmlParser_File
 	protected $_currentTag;
 	protected $_currentSale;
 
+	protected $_sale_columns = array(
+		'affiliate', 'amount', 'datetime', 'orderref'
+	);
+
 	public function startTag($parser, $name, $attribs = array())
 	{
 		if ($name == "SALES") {
