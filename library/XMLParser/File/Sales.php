@@ -4,13 +4,24 @@ include_once("XMLParser/File.php");
 
 class XMLParser_File_Sales extends XmlParser_File
 {
+	/**
+	 * String - Name of the current tag parsed
+	 */
 	protected $_currentTag;
+
+	/**
+	 * Array - Content of the current sale parsed
+	 */
 	protected $_currentSale;
 
 	protected $_sale_columns = array(
 		'affiliate', 'amount', 'datetime', 'orderref'
 	);
 
+	/**
+	 * Implementation of the startTag method, called in the beginning of a
+	 * tag parsing.
+	 */
 	public function startTag($parser, $name, $attribs = array())
 	{
 		if ($name == "SALES") {
@@ -23,11 +34,16 @@ class XMLParser_File_Sales extends XmlParser_File
 		$this->_currentTag = $name;
 	}
 
+	/**
+	 * Implementation of the tagContent method, save the content of each row in
+	 * an array
+	 */
 	public function tagContent($parser, $content)
 	{
 		if (
 			in_array($this->_currentTag, array('SALES', 'SALE'))
 			|| !in_array(strtolower($this->_currentTag), $this->_sale_columns)
+			//empty strings between tags (new line char for example)
 			|| empty($this->_currentTag)
 		) {
 			return;
@@ -36,6 +52,10 @@ class XMLParser_File_Sales extends XmlParser_File
 		$this->_currentSale[strtolower($this->_currentTag)] = $content;
 	}
 
+	/**
+	 * Implementation of the endTag method, called in the end of a
+	 * tag parsing.
+	 */
 	public function endTag($parser, $name, $attribs = array())
 	{
 		$return = null;

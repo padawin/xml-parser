@@ -2,6 +2,12 @@
 
 include_once('XMLParser/Exception.php');
 
+/**
+ * In production environment, it is advised to set _doProcess or _doRender
+ * (dependending on the needs) at true and activate the ephemeral mode, by
+ * calling parse method in this way:
+ * parse(XMLParser_File::OPTION_EPHEMERAL | XMLParser_File::OPTION_PROCESS | XMLParser_File::OPTION_RENDER)
+ */
 abstract class XMLParser_File
 {
 	/**
@@ -72,6 +78,10 @@ abstract class XMLParser_File
 
 	/**
 	 * Method called at the begining of the tag parsing
+	 *
+	 * @param $parser resource used to parse the file
+	 * @param $name name of the current tag
+	 * @param $parser tag's attributes
 	 */
 	public abstract function startTag($parser, $name, $attribs = array());
 
@@ -82,6 +92,12 @@ abstract class XMLParser_File
 
 	/**
 	 * Method called at the end of the tag parsing
+	 *
+	 * @param $parser resource used to parse the file
+	 * @param $name name of the current tag
+	 * @param $parser tag's attributes
+	 *
+	 * @return boolean true if the tag ends a row
 	 */
 	public abstract function endTag($parser, $name, $attribs = array());
 
@@ -122,6 +138,8 @@ abstract class XMLParser_File
 	/**
 	 * Method which will parse the xml file and set the result in a class
 	 * attribute.
+	 *
+	 * @param $options int
 	 */
 	public function parse($options = 0)
 	{
