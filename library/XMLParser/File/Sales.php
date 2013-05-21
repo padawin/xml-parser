@@ -67,7 +67,7 @@ class XMLParser_File_Sales extends XmlParser_File
 				$this->_currentSale
 			);
 
-			$this->_currentSale['commission'] = 50 + $this->_currentSale['amount'] * .05;
+			$this->_currentSale['commission'] = .5 + $this->_currentSale['amount'] * .05;
 
 			$return = $this->_currentSale;
 		}
