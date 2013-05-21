@@ -11,31 +11,35 @@ include_once('XMLParser/Exception.php');
 abstract class XMLParser_File
 {
 	/**
-	 * XML file
+	 * String - XML file path
 	 */
 	protected $_file;
 
 	/**
-	 * Content of the XML file
+	 * Array - Content of the XML file
 	 */
 	protected $_result;
 
-
+	/**
+	 * Resource - XML file parser
+	 */
 	protected $_parser;
 
 	/**
-	 * Boolean If true, the rows will be rendered when parsed, in the endTag call.
+	 * Boolean - If true, the rows will be rendered when parsed, in the endTag
+	 * 		call.
 	 */
 	protected $_doRender = false;
 
 	/**
-	 * Boolean If true, the rows will be processed when parsed, in the endTag call.
+	 * Boolean - If true, the rows will be processed when parsed, in the endTag
+	 * 		call.
 	 */
 	protected $_doProcess = false;
 
 	/**
-	 * Boolean If true, no data will be saved in _result.
-	 * If set at false, memory issues might happen with huge data amount.
+	 * Boolean - If true, no data will be saved in _result.
+	 * 		If set to false, memory issues might happen with huge data amount.
 	 */
 	protected $_ephemeralMode = false;
 
@@ -131,6 +135,7 @@ abstract class XMLParser_File
 			static::processRow($row);
 		}
 		if ($row !== null && !$this->_ephemeralMode) {
+			//Memory issues can occur here
 			$this->_result[] = $row;
 		}
 	}
@@ -143,15 +148,18 @@ abstract class XMLParser_File
 	 */
 	public function parse($options = 0)
 	{
+		//Set the options
 		$this->_doRender = $options & self::OPTION_RENDER == self::OPTION_RENDER;
 		$this->_doProcess = $options & self::OPTION_PROCESS == self::OPTION_PROCESS;
 		$this->_ephemeralMode = $options & self::OPTION_EPHEMERAL == self::OPTION_EPHEMERAL;
 
+		//Open the XML file
 		$fh = @fopen($this->_file, "r");
 		if (!$fh) {
 			throw new XMLParser_Exception("Cannot open file {$this->_file}");
 		}
 
+		//Read and parse the file
 		while (!feof($fh)) {
 			$data = fread($fh, 4096);
 			if (0 === xml_parse($this->_parser, $data, feof($fh))) {
@@ -160,6 +168,7 @@ abstract class XMLParser_File
 			}
 		}
 
+		//Close the handler and free the resources
 		fclose($fh);
 		xml_parser_free($this->_parser);
 	}
