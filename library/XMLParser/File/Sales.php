@@ -27,6 +27,7 @@ class XMLParser_File_Sales extends XmlParser_File
 	{
 		if (
 			in_array($this->_currentTag, array('SALES', 'SALE'))
+			|| !in_array(strtolower($this->_currentTag), $this->_sale_columns)
 			|| empty($this->_currentTag)
 		) {
 			return;
