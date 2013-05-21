@@ -1,13 +1,9 @@
 <?php
 if (!empty($this->data) && is_array($this->data)) {
 	foreach ($this->data as $row) {
-		printf(
-			"%s|%s|%s|%s|\"%s\"\n",
-			$row['affiliate'],
-			$row['amount'],
-			$row['commission'],
-			strtotime($row['datetime']),
-			$row['orderref']
-		);
+		//use of the default render, but any other display process could have
+		//been implemented, for example, because it is a HTML view, the rows
+		//could be displayed in a HTML table
+		XMLParser_File_Sales::renderRow($row);
 	}
 }
