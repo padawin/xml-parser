@@ -50,7 +50,7 @@ abstract class XMLParser_File
 	/**
 	 * Method called at the begining of the tag parsing
 	 */
-	public abstract function startTag($parser, $name, $attribs);
+	public abstract function startTag($parser, $name, $attribs = array());
 
 	/**
 	 * Method called to process the tag content
@@ -60,7 +60,7 @@ abstract class XMLParser_File
 	/**
 	 * Method called at the end of the tag parsing
 	 */
-	public abstract function endTag($parser, $name, $attribs);
+	public abstract function endTag($parser, $name, $attribs = array());
 
 	/**
 	 * Method which will parse the xml file and set the result in a class

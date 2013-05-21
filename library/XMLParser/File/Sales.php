@@ -7,7 +7,7 @@ class XMLParser_File_Sales extends XmlParser_File
 	protected $_currentTag;
 	protected $_currentSale;
 
-	public function startTag($parser, $name, $attribs)
+	public function startTag($parser, $name, $attribs = array())
 	{
 		if ($name == "SALES") {
 			$this->_result = array();
@@ -31,7 +31,7 @@ class XMLParser_File_Sales extends XmlParser_File
 		$this->_currentSale[strtolower($this->_currentTag)] = $content;
 	}
 
-	public function endTag($parser, $name, $attribs)
+	public function endTag($parser, $name, $attribs = array())
 	{
 		if ($name == 'SALE') {
 			$this->_currentSale['commission'] = number_format(
