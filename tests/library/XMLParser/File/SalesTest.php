@@ -38,6 +38,20 @@ class XMLParser_File_SalesTest extends Zend_Test_PHPUnit_ControllerTestCase
 		$this->assertTrue(is_null($file->getResult()));
 	}
 
+	public function testOtherXML()
+	{
+		$name = $this->bootstrap->getOption('storage_path') . '/data-other.xml';
+		$file = XMLParser_File_Sales::getFile($name);
+		try {
+			$file->parse();
+			$this->assertEmpty($file->getResult());
+		} catch (Exception $e) {
+			$this->assertTrue(false);
+		}
+
+		$this->assertTrue(is_null($file->getResult()));
+	}
+
 	public function testUnreadableFile()
 	{
 		$name = $this->bootstrap->getOption('storage_path') . '/data-unreadable.xml';
