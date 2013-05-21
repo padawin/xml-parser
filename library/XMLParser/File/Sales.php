@@ -40,6 +40,11 @@ class XMLParser_File_Sales extends XmlParser_File
 	{
 		$return = null;
 		if ($name == 'SALE') {
+			//make sure the row is complete
+			//by merging an empty "template" of the row
+			$this->_currentSale = array_merge(
+				array_fill_keys($this->_sale_columns, ''),
+				$this->_currentSale
 			);
 
 			$this->_currentSale['commission'] = 50 + $this->_currentSale['amount'] * .05;
