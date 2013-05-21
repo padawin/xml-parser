@@ -78,4 +78,15 @@ class XMLParser_File_SalesTest extends Zend_Test_PHPUnit_ControllerTestCase
 		ob_end_clean();
 		$this->assertTrue($out == $expected);
 	}
+
+	public function testData()
+	{
+		$name = $this->bootstrap->getOption('storage_path') . '/data-micro.xml';
+		$file = XMLParser_File_Sales::getFile($name);
+		$file->parse();
+
+		foreach ($file->getResult() as $index => $row) {
+			$this->assertTrue($row['commission'] == .5 + $row['amount'] * .05);
+		}
+	}
 }
