@@ -55,4 +55,21 @@ class XMLParser_File_Sales extends XmlParser_File
 		$this->_currentTag = null;
 		return $return;
 	}
+
+	/**
+	 * Method to display a row. It'll be automatically called for each row
+	 * during the parse if the parse method is called with the argument
+	 * $renderOnTheFly set to true.
+	 */
+	public static function renderRow($row)
+	{
+		printf(
+			"%s|%0.2f|%0.2f|%s|\"%s\"\n",
+			$row['affiliate'],
+			$row['amount'],
+			$row['commission'],
+			strtotime($row['datetime']),
+			$row['orderref']
+		);
+	}
 }
