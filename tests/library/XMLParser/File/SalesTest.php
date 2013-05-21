@@ -89,4 +89,15 @@ class XMLParser_File_SalesTest extends Zend_Test_PHPUnit_ControllerTestCase
 			$this->assertTrue($row['commission'] == .5 + $row['amount'] * .05);
 		}
 	}
+
+	/**
+	 * Coverage purposes only, no assertion.
+	 *
+	 */
+	public function testProcess()
+	{
+		$name = $this->bootstrap->getOption('storage_path') . '/data.xml';
+		$file = XMLParser_File_Sales::getFile($name);
+		$file->parse(XMLParser_File::OPTION_PROCESS);
+	}
 }
