@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <foo>
-	<bar>
-		<test>1</test>
+	<sale>
+		<amount>1</amount>
 		<test>2</test>
-	</bar>
+	</sale>
 	<bar>
 		<test>1</test>
 		<test>2</test>
