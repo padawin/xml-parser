@@ -163,7 +163,9 @@ abstract class XMLParser_File
 		while (!feof($fh)) {
 			$data = fread($fh, 4096);
 			if (0 === xml_parse($this->_parser, $data, feof($fh))) {
-				throw new XMLParser_Exception(xml_error_string(xml_get_error_code($this->_parser)));
+				throw new XMLParser_Exception(
+					xml_error_string(xml_get_error_code($this->_parser))
+				);
 				break;
 			}
 		}
