@@ -26,7 +26,7 @@ class XMLParser_File_SalesTest extends Zend_Test_PHPUnit_ControllerTestCase
 
 	public function testIncorrectFile()
 	{
-		$name = $this->bootstrap->getOption('storage_path') . '/data-bad-xml.xml';
+		$name = $this->bootstrap->getOption('storage_path') . '/data-bad.xml';
 		$file = XMLParser_File_Sales::getFile($name);
 		try {
 			$file->parse();
