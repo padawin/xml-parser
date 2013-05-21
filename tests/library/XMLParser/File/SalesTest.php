@@ -44,7 +44,7 @@ class XMLParser_File_SalesTest extends Zend_Test_PHPUnit_ControllerTestCase
 		$file = XMLParser_File_Sales::getFile($name);
 		try {
 			$file->parse();
-			$this->assertEmpty($file->getResult());
+			$this->assertTrue($file->getResult() === null);
 		} catch (Exception $e) {
 			$this->assertTrue(false);
 		}
