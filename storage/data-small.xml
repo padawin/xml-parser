@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sales>
+ <sale>
+  <datetime>2009-12-30 15:57:00</datetime>
+  <amount>3.37</amount>
+  <orderRef>LVW6622</orderRef>
+  <affiliate>14325</affiliate>
+ </sale>
+ <sale>
+  <datetime>2009-12-30 13:19:00</datetime>
+  <amount>9.18</amount>
+  <orderRef>HJV7145</orderRef>
+  <affiliate>50146</affiliate>
+ </sale>
+ <sale>
+  <datetime>2009-12-30 07:50:00</datetime>
+  <amount>3.84</amount>
+  <orderRef>BWJ5094</orderRef>
+  <affiliate>11774</affiliate>
+ </sale>
+ <sale>
+  <datetime>2009-12-30 06:07:00</datetime>
+  <amount>1.49</amount>
+  <orderRef>DTY3297</orderRef>
+  <affiliate>11774</affiliate>
+ </sale>
+ <sale>
+  <datetime>2009-12-29 11:13:00</datetime>
+  <amount>5.36</amount>
+  <orderRef>ZKU5367</orderRef>
+  <affiliate>11774</affiliate>
+ </sale>
+ <sale>
+  <datetime>2009-12-28 13:05:00</datetime>
+  <amount>2.04</amount>
+  <orderRef>KUX1867</orderRef>
+  <affiliate>11774</affiliate>
+ </sale>
+ <sale>
+  <datetime>2009-12-28 11:24:00</datetime>
+  <amount>4.87</amount>
+  <orderRef>IRY7308</orderRef>
+  <affiliate>50146</affiliate>
+ </sale>
+</sales>
