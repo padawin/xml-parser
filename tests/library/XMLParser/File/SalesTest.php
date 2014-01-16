@@ -26,13 +26,27 @@ class XMLParser_File_SalesTest extends Zend_Test_PHPUnit_ControllerTestCase
 
 	public function testIncorrectFile()
 	{
-		$name = $this->bootstrap->getOption('storage_path') . '/data-bad-xml.xml';
+		$name = $this->bootstrap->getOption('storage_path') . '/data-bad.xml';
 		$file = XMLParser_File_Sales::getFile($name);
 		try {
 			$file->parse();
 			$this->assertTrue(false);
 		} catch (Exception $e) {
 			$this->assertTrue($e instanceof XMLParser_Exception);
+		}
+
+		$this->assertTrue(is_null($file->getResult()));
+	}
+
+	public function testOtherXML()
+	{
+		$name = $this->bootstrap->getOption('storage_path') . '/data-other.xml';
+		$file = XMLParser_File_Sales::getFile($name);
+		try {
+			$file->parse();
+			$this->assertTrue($file->getResult() === null);
+		} catch (Exception $e) {
+			$this->assertTrue(false);
 		}
 
 		$this->assertTrue(is_null($file->getResult()));
