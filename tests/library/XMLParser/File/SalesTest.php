@@ -65,8 +65,8 @@ class XMLParser_File_SalesTest extends Zend_Test_PHPUnit_ControllerTestCase
 
 	public function testRenderOnTheFly()
 	{
-		$expected = '14325|3.37|50.17|1262185020|"LVW6622"
-50146|9.18|50.46|1262175540|"HJV7145"
+		$expected = '14325|3.37|0.67|1262185020|"LVW6622"
+50146|9.18|0.96|1262175540|"HJV7145"
 ';
 
 		$name = $this->bootstrap->getOption('storage_path') . '/data-micro.xml';
