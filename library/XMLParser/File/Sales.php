@@ -19,16 +19,30 @@ class XMLParser_File_Sales extends XmlParser_File
 	);
 
 	/**
+	 * States used in the file parsing
+	 */
+	const STATE_VOID = 0;
+	const STATE_IN_SALES = 1;
+	const STATE_IN_SALE = 2;
+
+	/**
+	 * Current state
+	 */
+	protected $_state = 0;
+
+	/**
 	 * Implementation of the startTag method, called in the beginning of a
 	 * tag parsing.
 	 */
 	public function startTag($parser, $name, $attribs = array())
 	{
-		if ($name == "SALES") {
+		if ($this->_state == self::STATE_VOID && $name == "SALES") {
 			$this->_result = array();
+			$this->_state = self::STATE_IN_SALES;
 		}
-		else if ($name == "SALE") {
+		else if ($this->_state == self::STATE_IN_SALES && $name == "SALE") {
 			$this->_currentSale = array();
+			$this->_state = self::STATE_IN_SALE;
 		}
 
 		$this->_currentTag = $name;
@@ -45,6 +59,7 @@ class XMLParser_File_Sales extends XmlParser_File
 			|| !in_array(strtolower($this->_currentTag), $this->_sale_columns)
 			//empty strings between tags (new line char for example)
 			|| empty($this->_currentTag)
+			|| !is_array($this->_currentSale)
 		) {
 			return;
 		}
@@ -59,7 +74,7 @@ class XMLParser_File_Sales extends XmlParser_File
 	public function endTag($parser, $name, $attribs = array())
 	{
 		$return = null;
-		if ($name == 'SALE') {
+		if ($name == 'SALE' && is_array($this->_currentSale)) {
 			//make sure the row is complete
 			//by merging an empty "template" of the row
 			$this->_currentSale = array_merge(
@@ -70,6 +85,9 @@ class XMLParser_File_Sales extends XmlParser_File
 			$this->_currentSale['commission'] = .5 + $this->_currentSale['amount'] * .05;
 
 			$return = $this->_currentSale;
+			$this->_currentSale = null;
+
+			$this->_state = self::STATE_IN_SALES;
 		}
 
 		$this->_currentTag = null;
