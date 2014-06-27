@@ -153,8 +153,11 @@ abstract class XMLParser_File
 		$this->_doProcess = ($options & self::OPTION_PROCESS) == self::OPTION_PROCESS;
 		$this->_ephemeralMode = ($options & self::OPTION_EPHEMERAL) == self::OPTION_EPHEMERAL;
 
+		if (!is_file($this->_file)) {
+			throw new XMLParser_Exception("The file {$this->_file} does not exist");
+		}
 		//Open the XML file
-		$fh = @fopen($this->_file, "r");
+		$fh = fopen($this->_file, "r");
 		if (!$fh) {
 			throw new XMLParser_Exception("Cannot open file {$this->_file}");
 		}
